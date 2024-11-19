@@ -1,0 +1,57 @@
+/* src/pages/HomePage.module.css */
+.container {
+  padding: 16px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+.productList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.productCard {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.productCard:hover {
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .productList {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .productCard {
+    width: 100%;
+    max-width: 90%; /* Ограничиваем ширину на мобильных */
+    margin: 0 auto; /* Центрируем карточки */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .productCard {
+    padding: 12px;
+    font-size: 0.9rem; /* Уменьшаем текст для меньших экранов */
+  }
+}

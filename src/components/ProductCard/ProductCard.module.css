@@ -1,0 +1,140 @@
+/* src/components/ProductCard/ProductCard.module.css */
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  align-items: center;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.image {
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.name {
+  font-size: 1.5em;
+  margin: 8px 0;
+}
+
+.description {
+  color: #555;
+}
+
+.price {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.btnWrap {
+  margin-top: auto;
+  display: flex;
+  gap: 5px;
+  text-align: center;
+  align-items: center;
+}
+
+.badge {
+  font-size: 12px;
+  max-width: 130px;
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #ff9800;
+  color: white;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+/* src/components/ProductCard/ProductCard.module.css */
+
+.orderButton {
+  max-width: 60px;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 10px 12px;
+  font-size: 15px;
+  color: white;
+  background-color: #25d366; /* Цвет WhatsApp */
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.orderButton:hover {
+  background-color: #1da851; /* Немного темнее для эффекта наведения */
+}
+
+.photoRequestButton {
+  background-color: #2196f3;
+  max-width: 135px;
+  font-size: 13px;
+  padding: 2px;
+}
+
+.photoRequestButton:hover {
+  background-color: #1976d2;
+}
+
+/* === Мобильная версия === */
+@media screen and (max-width: 768px) {
+  .card {
+    width: 90%;
+    padding: 12px;
+  }
+
+  .name {
+    font-size: 1.3rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .price {
+    font-size: 1rem;
+  }
+
+  .btnWrap {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .orderButton {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .name {
+    font-size: 1.2rem;
+  }
+
+  .description {
+    font-size: 0.8rem;
+  }
+
+  .price {
+    font-size: 0.9rem;
+  }
+
+  .orderButton {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
