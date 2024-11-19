@@ -8,21 +8,60 @@ import {
 } from '../services/api';
 import styles from './AdminPage.module.css';
 
-export const AdminPage: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Проверка авторизации
-  const [password, setPassword] = useState(''); // Хранение введенного пароля
-  const [products, setProducts] = useState([]); // Состояние продуктов
-  const [isAddingProduct, setIsAddingProduct] = useState(false); // Показать/скрыть форму
-  const [loading, setLoading] = useState(false); // Лоадер
-  const [error, setError] = useState<string | null>(null); // Сообщение об ошибке
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  status: 'available' | 'inProduction';
+};
 
-  const [newProductData, setNewProductData] = useState({
+export const AdminPage: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [newProductData, setNewProductData] = useState<{
+    name: string;
+    price: number;
+    description: string;
+    image: File | null;
+    status: 'available' | 'inProduction';
+  }>({
     name: '',
     price: 0,
     description: '',
-    image: null as File | null, // Объект файла
+    image: null,
     status: 'available',
   });
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        const fetchedProducts = await fetchProducts();
+        const productsWithId = fetchedProducts.map((product: any) => ({
+          id: product._id,
+          name: product.name,
+          price: product.price,
+          description: product.description,
+          image: product.image,
+          status: product.status,
+        }));
+        setProducts(productsWithId);
+      } catch (error) {
+        setError('Ошибка при загрузке товаров');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   const handleLogin = () => {
     if (password === 'admin123') {
@@ -51,7 +90,7 @@ export const AdminPage: React.FC = () => {
 
     try {
       setLoading(true);
-      const addedProduct = await addProduct(formData);
+      const addedProduct: Product = await addProduct(formData);
       setProducts((prev) => [...prev, addedProduct]);
       setIsAddingProduct(false);
     } catch (error) {
@@ -60,27 +99,6 @@ export const AdminPage: React.FC = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        setLoading(true);
-        const fetchedProducts = await fetchProducts();
-        // Преобразуем _id в id для консистентности
-        const productsWithId = fetchedProducts.map((product: any) => ({
-          ...product,
-          id: product._id,
-        }));
-        setProducts(productsWithId);
-      } catch (error) {
-        setError('Ошибка при загрузке товаров');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
 
   const handleDeleteProduct = async (id: string) => {
     try {
@@ -101,7 +119,7 @@ export const AdminPage: React.FC = () => {
     try {
       const newStatus =
         currentStatus === 'available' ? 'inProduction' : 'available';
-      const updatedProduct = await updateProductStatus(id, newStatus);
+      const updatedProduct: Product = await updateProductStatus(id, newStatus);
       setProducts((prev) =>
         prev.map((product) => (product.id === id ? updatedProduct : product))
       );
@@ -141,7 +159,7 @@ export const AdminPage: React.FC = () => {
 
       {isAddingProduct && (
         <div className={styles.productForm}>
-          <h2 className={styles.productFormH2}>Добавить новый продукт</h2>
+          <h2>Добавить новый продукт</h2>
           <input
             type="text"
             placeholder="Название"
