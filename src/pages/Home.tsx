@@ -4,7 +4,7 @@ import { fetchProducts } from '../services/api';
 import styles from './Home.module.css';
 
 type Product = {
-  id: string;
+  _id: string;
   name: string;
   price: number;
   description: string;
@@ -34,7 +34,7 @@ export const HomePage: React.FC = () => {
       <div className={styles.productList}>
         {products.map((product) => (
           <ProductCard
-            id={product.id}
+            id={product._id}
             key={product._id} // Используйте уникальный ключ
             name={product.name}
             price={product.price}
