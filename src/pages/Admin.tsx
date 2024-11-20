@@ -220,6 +220,7 @@ export const AdminPage: React.FC = () => {
         {products.map((product) => (
           <div key={product.id} className={styles.productCard}>
             <ProductCard
+              id={product._id}
               name={product.name}
               price={product.price}
               description={product.description}

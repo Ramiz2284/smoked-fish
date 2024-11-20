@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ProductCard.module.css';
 
 type ProductCardProps = {
+  id: string;
   name: string;
   price: number;
   description: string;

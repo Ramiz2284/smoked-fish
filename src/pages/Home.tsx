@@ -34,7 +34,8 @@ export const HomePage: React.FC = () => {
       <div className={styles.productList}>
         {products.map((product) => (
           <ProductCard
-            key={product.id} // Используйте уникальный ключ
+            id={product.id}
+            key={product._id} // Используйте уникальный ключ
             name={product.name}
             price={product.price}
             description={product.description}
