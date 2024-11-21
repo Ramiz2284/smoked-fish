@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import stub from '../../../img/stub.jpeg';
 import styles from './ProductCard.module.css';
 
 type ProductCardProps = {
@@ -20,7 +21,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [imageSrc, setImageSrc] = useState(image); // Состояние для источника изображения
 
   // URL заглушки
-  const placeholderImage = 'https://via.placeholder.com/300x200?text=No+Image';
+  const placeholderImage = stub;
 
   // Генерация ссылки на WhatsApp для заказа
   const handleWhatsAppOrderLink = () => {
