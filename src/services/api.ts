@@ -1,9 +1,12 @@
 export const addProduct = async (formData: FormData) => {
   try {
-    const response = await fetch('http://localhost:5000/api/products', {
-      method: 'POST',
-      body: formData,
-    });
+    const response = await fetch(
+      'https://smokedfish.marketlistem.site/api/products',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       throw new Error('Ошибка при добавлении товара');
@@ -18,7 +21,9 @@ export const addProduct = async (formData: FormData) => {
 
 export const fetchProducts = async () => {
   try {
-    const response = await fetch('http://localhost:5000/api/products');
+    const response = await fetch(
+      'https://smokedfish.marketlistem.site/api/products'
+    );
     if (!response.ok) {
       throw new Error('Ошибка при получении товаров');
     }
@@ -31,9 +36,12 @@ export const fetchProducts = async () => {
 
 export const deleteProduct = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:5000/api/products/${id}`, {
-      method: 'DELETE',
-    });
+    const response = await fetch(
+      `https://smokedfish.marketlistem.site/api/products/${id}`,
+      {
+        method: 'DELETE',
+      }
+    );
 
     if (!response.ok) {
       throw new Error('Ошибка при удалении товара');
@@ -46,7 +54,7 @@ export const deleteProduct = async (id: string) => {
   }
 };
 
-const API_URL = 'http://localhost:5000/api/products';
+const API_URL = 'https://smokedfish.marketlistem.site/api/products';
 
 export const updateProductStatus = async (
   id: string,
