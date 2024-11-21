@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ProductCard.module.css';
 
 type ProductCardProps = {
@@ -17,6 +17,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   image,
   status,
 }) => {
+  const [imageSrc, setImageSrc] = useState(image); // Состояние для источника изображения
+
+  // URL заглушки
+  const placeholderImage = 'https://via.placeholder.com/300x200?text=No+Image';
+
   // Генерация ссылки на WhatsApp для заказа
   const handleWhatsAppOrderLink = () => {
     const phoneNumber = '905444558407'; // Номер телефона
@@ -33,7 +38,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div className={styles.card}>
-      <img src={image} alt={name} className={styles.image} />
+      <img
+        src={imageSrc}
+        alt={name}
+        className={styles.image}
+        onError={() => setImageSrc(placeholderImage)} // Подменяем изображение на заглушку при ошибке загрузки
+      />
       <h2 className={styles.name}>{name}</h2>
       <p className={styles.description}>{description}</p>
       <p className={styles.price}>{price} ₺</p>
