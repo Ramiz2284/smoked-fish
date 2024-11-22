@@ -30,7 +30,7 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Копченая рыба в Анталии</h1>
+      <h1 className={styles.title}>Копченая рыба и колбаса в Анталии</h1>
       <div className={styles.productList}>
         {products.map((product) => (
           <ProductCard
