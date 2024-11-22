@@ -88,8 +88,12 @@
 /* === Мобильная версия === */
 @media screen and (max-width: 768px) {
   .card {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+  }
+  .image {
     width: 90%;
-    padding: 12px;
   }
 
   .name {
@@ -116,11 +120,6 @@
 }
 
 @media screen and (max-width: 480px) {
-  .card {
-    width: 100%;
-    padding: 10px;
-  }
-
   .name {
     font-size: 1.2rem;
   }

@@ -29,11 +29,18 @@
 }
 
 @media screen and (max-width: 768px) {
+  .container {
+    width: 90%;
+    padding: 0;
+    margin: 0 auto;
+  }
   .title {
     font-size: 1.5rem;
   }
 
   .productList {
+    width: 100%;
+    margin: 0 auto;
     flex-direction: column;
     gap: 12px;
   }
@@ -48,6 +55,9 @@
 @media screen and (max-width: 480px) {
   .title {
     font-size: 1.2rem;
+  }
+  .productList {
+    width: 90%;
   }
 
   .productCard {
