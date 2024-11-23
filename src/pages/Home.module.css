@@ -68,6 +68,11 @@
     width: 100%;
     max-width: 90%; /* Ограничиваем ширину на мобильных */
     margin: 0 auto; /* Центрируем карточки */
+    transition: none;
+  }
+
+  .productCard:hover {
+    transform: none; /* Убираем увеличение */
   }
 }
 
