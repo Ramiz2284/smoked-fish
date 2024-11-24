@@ -4,6 +4,7 @@ import {
   addProduct,
   deleteProduct,
   fetchProducts,
+  updateProduct,
   updateProductStatus,
 } from '../services/api';
 import styles from './AdminPage.module.css';
@@ -38,6 +39,8 @@ export const AdminPage: React.FC = () => {
     image: null,
     status: 'available',
   });
+
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null); // Перемещено выше
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -74,6 +77,64 @@ export const AdminPage: React.FC = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setPassword('');
+  };
+  if (!isAuthenticated) {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.title}>Админ-панель</h1>
+        <div className={styles.authForm}>
+          <input
+            className={styles.authInput}
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Введите пароль"
+          />
+          <button className={styles.authButton} onClick={handleLogin}>
+            Войти
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+  };
+
+  const handleUpdateProduct = async () => {
+    if (!editingProduct) return;
+
+    const formData = new FormData();
+    formData.append('name', editingProduct.name);
+    formData.append('price', editingProduct.price.toString());
+    formData.append('description', editingProduct.description);
+
+    if (editingProduct.image instanceof File) {
+      formData.append('image', editingProduct.image);
+    } else {
+      formData.append('image', editingProduct.image); // Передаем старый путь, если изображение не обновлено
+    }
+
+    formData.append('status', editingProduct.status);
+
+    try {
+      setLoading(true);
+      const updatedProduct: Product = await updateProduct(
+        editingProduct.id,
+        formData
+      );
+      setProducts((prev) =>
+        prev.map((product) =>
+          product.id === updatedProduct.id ? updatedProduct : product
+        )
+      );
+      setEditingProduct(null); // Закрываем форму редактирования
+    } catch (error) {
+      setError('Ошибка при обновлении товара');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSaveProduct = async () => {
@@ -127,26 +188,6 @@ export const AdminPage: React.FC = () => {
       alert('Ошибка при обновлении статуса товара');
     }
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className={styles.container}>
-        <h1 className={styles.title}>Админ-панель</h1>
-        <div className={styles.authForm}>
-          <input
-            className={styles.authInput}
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Введите пароль"
-          />
-          <button className={styles.authButton} onClick={handleLogin}>
-            Войти
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className={styles.container}>
@@ -215,6 +256,64 @@ export const AdminPage: React.FC = () => {
           <button onClick={() => setIsAddingProduct(false)}>Отмена</button>
         </div>
       )}
+      {editingProduct && (
+        <div className={styles.productForm}>
+          <h2>Редактировать продукт</h2>
+          <input
+            type="text"
+            placeholder="Название"
+            value={editingProduct.name}
+            onChange={(e) =>
+              setEditingProduct({ ...editingProduct, name: e.target.value })
+            }
+          />
+          <input
+            type="number"
+            placeholder="Цена"
+            value={editingProduct.price}
+            onChange={(e) =>
+              setEditingProduct({
+                ...editingProduct,
+                price: Number(e.target.value),
+              })
+            }
+          />
+          <textarea
+            placeholder="Описание"
+            value={editingProduct.description}
+            onChange={(e) =>
+              setEditingProduct({
+                ...editingProduct,
+                description: e.target.value,
+              })
+            }
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              setEditingProduct({
+                ...editingProduct,
+                image: e.target.files?.[0] || editingProduct.image,
+              })
+            }
+          />
+          <select
+            value={editingProduct.status}
+            onChange={(e) =>
+              setEditingProduct({
+                ...editingProduct,
+                status: e.target.value as 'available' | 'inProduction',
+              })
+            }
+          >
+            <option value="available">В наличии</option>
+            <option value="inProduction">В производстве</option>
+          </select>
+          <button onClick={handleUpdateProduct}>Сохранить</button>
+          <button onClick={() => setEditingProduct(null)}>Отмена</button>
+        </div>
+      )}
 
       <div className={styles.productList}>
         {products.map((product) => (
@@ -229,6 +328,9 @@ export const AdminPage: React.FC = () => {
             />
             <button onClick={() => handleDeleteProduct(product.id)}>
               Удалить
+            </button>
+            <button onClick={() => handleEditProduct(product)}>
+              Редактировать
             </button>
             <button
               className={`${styles.actionButton} ${styles.status}`}
