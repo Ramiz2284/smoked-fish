@@ -14,7 +14,7 @@ type Product = {
   name: string;
   price: number;
   description: string;
-  image: string;
+  image: string | File; // Теперь image может быть строкой или File
   status: 'available' | 'inProduction';
 };
 
@@ -323,7 +323,7 @@ export const AdminPage: React.FC = () => {
               name={product.name}
               price={product.price}
               description={product.description}
-              image={product.image}
+              image={typeof product.image === 'string' ? product.image : ''} // Проверяем тип
               status={product.status}
             />
             <button onClick={() => handleDeleteProduct(product.id)}>
