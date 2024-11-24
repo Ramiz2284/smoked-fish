@@ -1,5 +1,15 @@
 const API_URL = 'https://smokedfish.marketlistem.site/api/products';
 
+// Тип для продукта
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  status: 'available' | 'inProduction';
+};
+
 // Добавить продукт
 export const addProduct = async (formData: FormData): Promise<Product> => {
   try {
