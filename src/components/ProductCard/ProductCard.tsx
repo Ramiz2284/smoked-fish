@@ -66,7 +66,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           target="_blank"
           rel="noopener noreferrer"
         >
-          Запросить фото последней партии
+          Запросить фото последнего копчения
         </a>
       </div>
     </div>
