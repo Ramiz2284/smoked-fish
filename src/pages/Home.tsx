@@ -33,7 +33,7 @@ export const HomePage: React.FC = () => {
       <h1 className={styles.title}>Копченая рыба и колбаса в Анталии</h1>
       <h2 className={styles.subtitle}>
         Свежая рыба без химии — каждую неделю домашнее копчение. Глубокая
-        заморозка до -40°C для вашей безопасности.
+        заморозка перед копчением до -40°C для вашей безопасности.
       </h2>
       <button
         className={styles.addressButton}
