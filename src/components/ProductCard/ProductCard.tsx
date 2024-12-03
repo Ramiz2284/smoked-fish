@@ -26,7 +26,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   // Генерация ссылки на WhatsApp для заказа
   const handleWhatsAppOrderLink = () => {
     const phoneNumber = '905444558407'; // Номер телефона
-    const message = `Здравствуйте! Я хочу заказать "${name}" за ${price} ₽.`;
+    const message = `Здравствуйте! Я хочу заказать "${name}" за ${price} ₺.`;
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };
 
