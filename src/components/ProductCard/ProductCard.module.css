@@ -341,7 +341,6 @@
   }
 
   .cardContainer {
-    width: 100%;
     max-width: 290px;
     aspect-ratio: 4/5;
   }
