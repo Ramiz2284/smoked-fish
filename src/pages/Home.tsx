@@ -1,33 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ProductCard } from '../components/ProductCard/ProductCard';
-import { fetchProducts } from '../services/api';
+import { DEFAULT_PRODUCTS } from '../data/products';
 import styles from './Home.module.css';
 
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  status: 'available' | 'inProduction';
-};
-
 export const HomePage: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await fetchProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error('Ошибка при загрузке продуктов:', error);
-      }
-    };
-
-    loadProducts();
-  }, []);
-
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Копченая рыба и колбаса в Анталии</h1>
@@ -44,14 +20,14 @@ export const HomePage: React.FC = () => {
         Посмотреть адрес
       </button>
       <div className={styles.productList}>
-        {products.map((product, index) => (
+        {DEFAULT_PRODUCTS.map((product) => (
           <ProductCard
             id={product.id}
-            key={`${product.id}-${index}`} // Уникальный ключ даже в случае повторения ID
+            key={product.id}
             name={product.name}
             price={product.price}
             description={product.description}
-            image={product.image}
+            images={product.images}
             status={product.status}
           />
         ))}

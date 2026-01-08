@@ -14,7 +14,8 @@ type Product = {
   name: string;
   price: number;
   description: string;
-  image: string | File; // Теперь image может быть строкой или File
+  image?: string | File; // Для обратной совместимости
+  images?: (string | File)[]; // Для новой версии с множественными фото
   status: 'available' | 'inProduction';
 };
 
@@ -112,7 +113,7 @@ export const AdminPage: React.FC = () => {
 
     if (editingProduct.image instanceof File) {
       formData.append('image', editingProduct.image);
-    } else {
+    } else if (editingProduct.image) {
       formData.append('image', editingProduct.image); // Передаем старый путь, если изображение не обновлено
     }
 
@@ -323,7 +324,10 @@ export const AdminPage: React.FC = () => {
               name={product.name}
               price={product.price}
               description={product.description}
-              image={typeof product.image === 'string' ? product.image : ''} // Проверяем тип
+              images={
+                product.images ||
+                (product.image ? [product.image as string] : [])
+              }
               status={product.status}
             />
             <button onClick={() => handleDeleteProduct(product.id)}>

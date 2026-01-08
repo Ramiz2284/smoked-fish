@@ -44,11 +44,18 @@
 /* === Мобильная версия === */
 @media screen and (max-width: 768px) {
   #root {
-    width: 100%;
+    max-width: 100%;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    text-align: center;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #root {
+    padding: 0;
+  }
+
+  .card {
+    padding: 1.2rem;
   }
 }
