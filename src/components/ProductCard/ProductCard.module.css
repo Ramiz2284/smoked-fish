@@ -56,6 +56,16 @@
   background-size: cover;
   background-position: center;
   justify-content: flex-end;
+  visibility: visible;
+  opacity: 1;
+  transition:
+    visibility 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+    opacity 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.card.flipped .cardFront {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .cardFront::before {
@@ -202,6 +212,16 @@
   color: white;
   transform: rotateY(180deg);
   padding: 20px;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+    opacity 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.card.flipped .cardBack {
+  visibility: visible;
+  opacity: 1;
 }
 
 .name {
